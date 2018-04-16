@@ -1,0 +1,128 @@
+<html>
+  <head>
+    <style>
+      body{
+        background-color: black;
+      }
+      .calculator{
+        padding : 1px;
+        margin : 40px;
+        background : #dfd8d0;;
+        width : 280px;
+        margin-left : auto;
+        margin-right : auto;
+        border-radius : 20px;
+      }
+      #output{
+        background: #c3c2ab;
+        width : 230px;
+        height : 70px;
+        border-radius : 6px;
+        margin-left : auto;
+        margin-right : auto;
+        margin-top : 20px;
+        font-size : 3em;
+        font-family : sans-serif;
+        padding-right : 10px;
+      }
+      #panel{
+        background-color:;
+        width : 250px;
+        margin-left : auto;
+        margin-right : auto;
+        margin-top : 7px;
+        margin-bottom : 20px;
+      }
+      button{
+        width : 50px;
+        height : 50px;
+        margin: 2px;
+        border-radius: 10px;
+        background-color: #3a3a3a;
+        color : white;
+      }
+      .bigbutton{
+        width : 108px;
+      }
+    </style>
+  </head>
+  <div class="text-center">
+    <div class="calculator">
+      <div id="output">
+        <p id="out" class="text-right">0</p>
+      </div>
+      <div id="panel">
+        <button id="clear">AC</button>
+        <button id="backone">CE</button>
+        <button id="/">/</button>
+        <button id="*">X</button><br>
+        <button id="7">7</button>
+        <button id="8">8</button>
+        <button id="9">9</button>
+        <button id="-">-</button><br>
+        <button id="4">4</button>
+        <button id="5">5</button>
+        <button id="6">6</button>
+        <button id="+">+</button><br>
+        <button id="1">1</button>
+        <button id="2">2</button>
+        <button id="3">3</button>
+        <button id="coma">.</button><br>
+        <button class="bigbutton" id="0">0</button>
+        <button class="bigbutton" id="equal">=</button>
+      </div>
+    </div>
+  </div>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        var result = [""];
+        var hasil;
+        var decimal = ["."];
+        var operator = ["+", "-", "*", "/"];
+        var angka = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+        var outString;
+        function update(){
+          outString = result.join("");
+          $("#out").html(outString);
+        }
+        function calculate(){
+          outString = result.join("");
+          hasil = eval(outString);
+          result = [""];
+          result.push(String(hasil));
+          update();
+        }
+        function getInput(input){
+          if(decimal.includes(result[result.length-1])===true && input === "."){
+            console.log("error")
+          }else if(result.length === 1 && operator.includes(input)===false){
+            result.push(input);
+          }else if(operator.includes(result[result.length-1])===false){
+            result.push(input);
+          }else if(angka.includes(Number(input))){
+            result.push(input);
+          }
+          update();
+        }
+        $("button").on("click", function(){
+          if(this.id === "clear"){
+            result = [""];
+            update();
+          }else if(this.id === "backone"){
+            result.pop();
+            update();
+          }else if(this.id === "equal"){
+            calculate();
+          }else{
+            if(result[result.length-1].indexOf("+", "-", "*", "/", ".")===-1){
+              getInput(this.id);
+            }else{
+              getInput(this.id);
+            }  
+          }
+        });
+      });
+    </script>
+</html>
